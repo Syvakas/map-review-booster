@@ -6,8 +6,17 @@ import { Separator } from '@/components/ui/separator';
 import { FileText, Shield } from 'lucide-react';
 
 const Index = () => {
+  console.log('Index component rendering...');
+  
   const [improvedText, setImprovedText] = useState<string>('');
-  const [config, setConfig] = useState(() => parseQuery());
+  const [config, setConfig] = useState(() => {
+    try {
+      return parseQuery();
+    } catch (error) {
+      console.error('Error parsing query:', error);
+      return { apiBase: '', gmapsUrl: '', keywords: [] };
+    }
+  });
 
   // Load stored improved text on mount
   useEffect(() => {
