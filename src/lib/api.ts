@@ -40,6 +40,7 @@ export class ApiClient {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Charset': 'utf-8',
         },
         body: JSON.stringify(data),
         signal: this.controller.signal,
