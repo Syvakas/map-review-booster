@@ -1,3 +1,4 @@
+// Top-level of file
 export const runtime = 'edge';
 
 export default async function handler(req: Request): Promise<Response> {
@@ -93,3 +94,4 @@ ${text}`;
     });
   }
 }
+export const config = { runtime: 'edge' };
