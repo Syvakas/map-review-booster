@@ -13,7 +13,7 @@
 3. Ρυθμίσεις:
    - **Name**: `map-review-booster-backend`
    - **Environment**: `Node`
-   - **Build Command**: `cd backend && npm install`
+   - **Build Command**: `npm install --prefix backend`
    - **Start Command**: `cd backend && npm start`
    - **Plan**: `Free`
 
