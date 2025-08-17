@@ -4,21 +4,14 @@ interface RewriteRequest {
 }
 
 interface RewriteResponse {
-  success: boolean;
-  improvedText: string;
-  originalLength: number;
-  improvedLength: number;
-  timestamp: string;
+  improved: string;
 }
 
 interface ApiError {
   error: string;
 }
 
-// For Vercel deployment, API routes are relative
-const API_BASE = import.meta.env.PROD 
-  ? window.location.origin // Use current domain in production
-  : 'http://localhost:3000'; // Vercel dev server default port
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 export class ApiClient {
   private controller: AbortController | null = null;
@@ -41,7 +34,6 @@ export class ApiClient {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept-Charset': 'utf-8',
         },
         body: JSON.stringify(data),
         signal: this.controller.signal,

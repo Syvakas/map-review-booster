@@ -11,12 +11,13 @@ import { getStoredValue, setStoredValue, STORAGE_KEYS } from '@/lib/config';
 interface ReviewFormProps {
   initialKeywords: string[];
   onImprovedText: (text: string) => void;
+  apiBaseOverride?: string;
 }
 
 const MAX_CHARACTERS = 2000;
 const MIN_CHARACTERS = 5;
 
-export function ReviewForm({ initialKeywords, onImprovedText }: ReviewFormProps) {
+export function ReviewForm({ initialKeywords, onImprovedText, apiBaseOverride }: ReviewFormProps) {
   const [originalText, setOriginalText] = useState('');
   const [keywords, setKeywords] = useState<string[]>(initialKeywords);
   const [isLoading, setIsLoading] = useState(false);
@@ -63,8 +64,8 @@ export function ReviewForm({ initialKeywords, onImprovedText }: ReviewFormProps)
       });
 
       // Store the improved text
-      setStoredValue(STORAGE_KEYS.IMPROVED_TEXT, response.improvedText);
-      onImprovedText(response.improvedText);
+      setStoredValue(STORAGE_KEYS.IMPROVED_TEXT, response.improved);
+      onImprovedText(response.improved);
       
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Απρόβλεπτο σφάλμα';

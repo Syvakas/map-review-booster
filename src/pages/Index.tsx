@@ -1,28 +1,26 @@
 import { useState, useEffect } from 'react';
 import { ReviewForm } from '@/components/ReviewForm';
 import { ResultCard } from '@/components/ResultCard';
+import { ApiSetup } from '@/components/ApiSetup';
 import { parseQuery, getStoredValue, STORAGE_KEYS } from '@/lib/config';
 import { Separator } from '@/components/ui/separator';
 import { FileText, Shield } from 'lucide-react';
 
 const Index = () => {
-  console.log('Index component rendering...');
-  
   const [improvedText, setImprovedText] = useState<string>('');
-  const [config, setConfig] = useState(() => {
-    try {
-      return parseQuery();
-    } catch (error) {
-      console.error('Error parsing query:', error);
-      return { apiBase: '', gmapsUrl: '', keywords: [] };
-    }
-  });
+  const [config, setConfig] = useState(() => parseQuery());
+  const [apiBaseOverride, setApiBaseOverride] = useState<string>('');
 
   // Load stored improved text on mount
   useEffect(() => {
     const stored = getStoredValue(STORAGE_KEYS.IMPROVED_TEXT);
     if (stored) {
       setImprovedText(stored);
+    }
+
+    const apiOverride = getStoredValue(STORAGE_KEYS.API_BASE_OVERRIDE);
+    if (apiOverride) {
+      setApiBaseOverride(apiOverride);
     }
   }, []);
 
@@ -34,6 +32,13 @@ const Index = () => {
     // Optional callback for analytics or additional actions
     console.log('User completed copy and open action');
   };
+
+  const handleApiBaseSet = (apiBase: string) => {
+    setApiBaseOverride(apiBase);
+  };
+
+  const effectiveApiBase = apiBaseOverride || config.apiBase;
+  const showApiSetup = !effectiveApiBase;
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,6 +65,12 @@ const Index = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-8">
+          
+          {/* API Setup (if needed) */}
+          {showApiSetup && (
+            <ApiSetup onApiBaseSet={handleApiBaseSet} />
+          )}
+
           {/* Review Form */}
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-6">
@@ -67,6 +78,7 @@ const Index = () => {
                 <ReviewForm
                   initialKeywords={config.keywords}
                   onImprovedText={handleImprovedText}
+                  apiBaseOverride={apiBaseOverride}
                 />
               </div>
             </div>
