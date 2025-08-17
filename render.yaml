@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: map-review-booster-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: OPENAI_API_KEY
+        sync: false  # This will be set manually in Render dashboard
+    healthCheckPath: /api/health

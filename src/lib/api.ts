@@ -15,7 +15,9 @@ interface ApiError {
   error: string;
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE || '';
+const API_BASE = import.meta.env.PROD 
+  ? (import.meta.env.VITE_API_BASE_PRODUCTION || 'https://map-review-booster-backend.onrender.com')
+  : (import.meta.env.VITE_API_BASE || 'http://localhost:3001');
 
 export class ApiClient {
   private controller: AbortController | null = null;
