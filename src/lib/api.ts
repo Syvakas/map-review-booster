@@ -1,3 +1,4 @@
+// Το αρχείο: export class ApiClient { ... } και μέθοδος rewriteReview
 interface RewriteRequest {
   text: string;
   keywords?: string[];
@@ -11,7 +12,7 @@ interface ApiError {
   error: string;
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE || '';
+const API_BASE = (import.meta.env.VITE_API_BASE as string | undefined) || (typeof window !== 'undefined' ? window.location.origin : '');
 
 export class ApiClient {
   private controller: AbortController | null = null;
@@ -30,7 +31,8 @@ export class ApiClient {
     const timeoutId = setTimeout(() => this.controller?.abort(), 15000);
 
     try {
-      const response = await fetch(`${API_BASE}/api/rewrite`, {
+      const baseUrl = API_BASE.replace(/\/+$/, '');
+      const response = await fetch(`${baseUrl}/api/rewrite`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
