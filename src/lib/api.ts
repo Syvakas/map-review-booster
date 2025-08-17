@@ -15,9 +15,10 @@ interface ApiError {
   error: string;
 }
 
+// For Vercel deployment, API routes are relative
 const API_BASE = import.meta.env.PROD 
-  ? (import.meta.env.VITE_API_BASE_PRODUCTION || 'https://map-review-booster.onrender.com')
-  : (import.meta.env.VITE_API_BASE || 'http://localhost:3001');
+  ? '' // Empty string for production - uses same domain
+  : 'http://localhost:3000'; // Vercel dev server default port
 
 export class ApiClient {
   private controller: AbortController | null = null;
