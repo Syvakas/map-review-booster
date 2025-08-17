@@ -20,13 +20,14 @@ const openai = new OpenAI({
 // Security middleware
 app.use(helmet());
 
-// CORS configuration - allow frontend on port 8081
+// CORS configuration - allow frontend on port 8081 and Vercel
 app.use(cors({
   origin: [
     'http://localhost:8081',
     'http://127.0.0.1:8081',
     'http://localhost:5173', // Vite default port
-    'http://127.0.0.1:5173'
+    'http://127.0.0.1:5173',
+    'https://map-review-booster.vercel.app' // Vercel production URL
   ],
   credentials: true,
   methods: ['GET', 'POST'],
