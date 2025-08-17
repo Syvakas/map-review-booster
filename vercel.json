@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/rewrite.ts": {
+      "runtime": "edge"
+    }
+  }
+}
