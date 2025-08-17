@@ -1,11 +1,10 @@
-// Top-level of file
 export const runtime = 'edge';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Μέθοδος δεν επιτρέπεται' }), {
       status: 405,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 
@@ -13,25 +12,25 @@ export default async function handler(req: Request): Promise<Response> {
   if (!apiKey) {
     return new Response(JSON.stringify({ error: 'Λείπει το OPENAI_API_KEY' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 
-  let body: any;
+  let body;
   try {
     body = await req.json();
   } catch {
     return new Response(JSON.stringify({ error: 'Μη έγκυρο JSON' }), {
       status: 400,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 
-  const { text, keywords } = body || {};
+  const { text, keywords } = body as { text?: string; keywords?: string[] };
   if (!text || typeof text !== 'string') {
     return new Response(JSON.stringify({ error: 'Το πεδίο text είναι υποχρεωτικό' }), {
       status: 400,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 
@@ -70,7 +69,7 @@ ${text}`;
       const errText = await resp.text();
       return new Response(JSON.stringify({ error: `OpenAI error: ${errText.slice(0, 500)}` }), {
         status: 502,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' }
       });
     }
 
@@ -79,18 +78,18 @@ ${text}`;
     if (!improved) {
       return new Response(JSON.stringify({ error: 'Άγνωστη απάντηση OpenAI' }), {
         status: 502,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' }
       });
     }
 
     return new Response(JSON.stringify({ improved }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     });
   } catch (e) {
     return new Response(JSON.stringify({ error: 'Αποτυχία κλήσης OpenAI' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 }
