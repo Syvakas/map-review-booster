@@ -11,13 +11,12 @@ import { getStoredValue, setStoredValue, STORAGE_KEYS } from '@/lib/config';
 interface ReviewFormProps {
   initialKeywords: string[];
   onImprovedText: (text: string) => void;
-  apiBaseOverride?: string;
 }
 
 const MAX_CHARACTERS = 2000;
 const MIN_CHARACTERS = 5;
 
-export function ReviewForm({ initialKeywords, onImprovedText, apiBaseOverride }: ReviewFormProps) {
+export function ReviewForm({ initialKeywords, onImprovedText }: ReviewFormProps) {
   const [originalText, setOriginalText] = useState('');
   const [keywords, setKeywords] = useState<string[]>(initialKeywords);
   const [isLoading, setIsLoading] = useState(false);
