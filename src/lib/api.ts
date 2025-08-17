@@ -4,7 +4,11 @@ interface RewriteRequest {
 }
 
 interface RewriteResponse {
-  improved: string;
+  success: boolean;
+  improvedText: string;
+  originalLength: number;
+  improvedLength: number;
+  timestamp: string;
 }
 
 interface ApiError {

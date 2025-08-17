@@ -63,8 +63,8 @@ export function ReviewForm({ initialKeywords, onImprovedText }: ReviewFormProps)
       });
 
       // Store the improved text
-      setStoredValue(STORAGE_KEYS.IMPROVED_TEXT, response.improved);
-      onImprovedText(response.improved);
+      setStoredValue(STORAGE_KEYS.IMPROVED_TEXT, response.improvedText);
+      onImprovedText(response.improvedText);
       
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Απρόβλεπτο σφάλμα';
