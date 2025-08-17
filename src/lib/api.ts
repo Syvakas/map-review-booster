@@ -17,7 +17,7 @@ interface ApiError {
 
 // For Vercel deployment, API routes are relative
 const API_BASE = import.meta.env.PROD 
-  ? '' // Empty string for production - uses same domain
+  ? window.location.origin // Use current domain in production
   : 'http://localhost:3000'; // Vercel dev server default port
 
 export class ApiClient {
