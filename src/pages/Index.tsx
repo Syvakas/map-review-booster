@@ -4,6 +4,7 @@ import { ResultCard } from '@/components/ResultCard';
 import { parseQuery, getStoredValue, STORAGE_KEYS } from '@/lib/config';
 import { Separator } from '@/components/ui/separator';
 import { FileText, Shield } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   const [improvedText, setImprovedText] = useState<string>('');
@@ -129,7 +130,7 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Footer */}
+      {/* Footer - Replaced with new Footer component */}
       <footer className="border-t border-border/50 bg-muted/30 mt-16">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
@@ -140,15 +141,11 @@ const Index = () => {
                 Μην προσθέτεις στοιχεία που δεν ισχύουν και μην δημοσιεύεις προσωπικά δεδομένα τρίτων.
               </div>
             </div>
-            
-            <div className="text-center mt-6 pt-4 border-t border-border/30">
-              <p className="text-xs text-muted-foreground">
-                © 2024 Review Booster - Βελτίωση κριτικών Google Maps
-              </p>
-            </div>
           </div>
         </div>
       </footer>
+      
+      <Footer />
     </div>
   );
 };
