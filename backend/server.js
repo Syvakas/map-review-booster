@@ -117,13 +117,48 @@ app.post('/api/rewrite',
 5. Make the content more discoverable and appealing
 6. Keep the tone authentic and trustworthy
 
-Always respond in the same language as the input text.`;
+CRITICAL INSTRUCTION: You MUST ALWAYS respond in the EXACT SAME LANGUAGE as the input text. 
 
-      const userPrompt = `Transform this review into a more descriptive and SEO-friendly version:
+Examples:
+- If input is "Αυτό είναι ένα καλό εστιατόριο" (Greek), respond in Greek like "Αυτό είναι ένα εξαιρετικό εστιατόριο με υπέροχη ατμόσφαιρα..."
+- If input is "This is a good restaurant" (English), respond in English like "This is an exceptional restaurant with wonderful atmosphere..."
 
-Original review: "${text}"
+NEVER translate to another language. If you receive Greek text, you MUST respond in Greek.`;
+
+      // Simple function to detect language based on character sets
+      function detectLanguage(text) {
+        // Greek character range
+        const greekRegex = /[\u0370-\u03FF\u1F00-\u1FFF]/;
+        // Cyrillic character range
+        const cyrillicRegex = /[\u0400-\u04FF]/;
+        // Arabic character range
+        const arabicRegex = /[\u0600-\u06FF]/;
+        // Hebrew character range
+        const hebrewRegex = /[\u0590-\u05FF]/;
+        // Chinese character range
+        const chineseRegex = /[\u4E00-\u9FFF]/;
+        // Japanese character ranges
+        const japaneseRegex = /[\u3040-\u309F\u30A0-\u30FF\uFF00-\uFFEF\u4E00-\u9FAF]/;
+        // Korean character range
+        const koreanRegex = /[\uAC00-\uD7AF\u1100-\u11FF\u3130-\u318F\uA960-\uA97F\uD7B0-\uD7FF]/;
+
+        if (greekRegex.test(text)) return "Greek";
+        if (cyrillicRegex.test(text)) return "Cyrillic";
+        if (arabicRegex.test(text)) return "Arabic";
+        if (hebrewRegex.test(text)) return "Hebrew";
+        if (chineseRegex.test(text)) return "Chinese";
+        if (japaneseRegex.test(text)) return "Japanese";
+        if (koreanRegex.test(text)) return "Korean";
+        return "English or Latin-based";
+      }
+
+      const userPrompt = `Transform this review into a more descriptive and SEO-friendly version. YOU MUST RESPOND IN THE EXACT SAME LANGUAGE AS THE ORIGINAL REVIEW - DO NOT TRANSLATE:
+
+Original Review (Language: ${detectLanguage(text)}): "${text}"
 
 ${keywordsString ? `Please naturally incorporate these keywords if relevant: ${keywordsString}` : ''}
+
+CRITICAL INSTRUCTION: Your response MUST be in the EXACT SAME LANGUAGE as the original review. DO NOT translate to any other language under any circumstances.
 
 Provide only the improved review text, nothing else.`;
 
@@ -138,7 +173,8 @@ Provide only the improved review text, nothing else.`;
         temperature: 0.7,
         top_p: 1,
         frequency_penalty: 0.1,
-        presence_penalty: 0.1
+        presence_penalty: 0.1,
+        response_format: { type: "text" }
       });
 
       const improvedText = completion.choices[0]?.message?.content?.trim();
