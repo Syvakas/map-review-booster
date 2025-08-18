@@ -31,7 +31,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="gradient-hero border-b border-border/50">
-        <div className="max-w-5xl mx-auto px-4 py-8 md:py-12">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 py-8 md:py-12">
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="p-3 bg-primary/10 rounded-2xl shadow-lg">
@@ -50,7 +50,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
+      <main className="max-w-5xl mx-auto px-6 sm:px-8 py-8">
         <div className="space-y-8">
           {/* Review Form */}
           <div className="grid lg:grid-cols-2 gap-8">
@@ -158,7 +158,7 @@ const Index = () => {
 
       {/* Footer - Premium styling */}
       <footer className="border-t border-border/50 bg-muted/30 mt-16">
-        <div className="max-w-5xl mx-auto px-4 py-8">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 py-8">
           <div className="flex items-start gap-3 p-6 bg-amber-50/50 border border-amber-200/50 rounded-2xl shadow-lg">
             <Shield className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
             <div className="text-sm text-amber-800 leading-relaxed">
