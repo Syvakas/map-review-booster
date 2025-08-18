@@ -134,7 +134,7 @@ export function ResultCard({ improvedText, gmapsUrl, onCopyAndOpen }: ResultCard
             ) : (
               <>
                 <ExternalLink className="mr-2 h-4 w-4" />
-                Επόμενο: Αντιγραφή & Άνοιγμα Google Maps
+                Αντιγραφή & Άνοιγμα Maps
               </>
             )}
           </Button>
