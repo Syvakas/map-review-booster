@@ -130,16 +130,20 @@ export function ReviewForm({ initialKeywords, onImprovedText }: ReviewFormProps)
       <Button
         type="submit"
         disabled={!isValid || isLoading}
-        className="w-full gradient-primary hover:brightness-110 transition-smooth disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-lg"
         aria-describedby={error ? "validation-message" : undefined}
       >
         {isLoading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
             <span aria-live="polite">Βελτίωση κειμένου...</span>
           </>
         ) : (
-          'Βελτίωση κειμένου'
+          <>
+            <span className="flex items-center justify-center gap-2">
+              ✨ Βελτίωση κειμένου
+            </span>
+          </>
         )}
       </Button>
     </form>
