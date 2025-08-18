@@ -92,42 +92,7 @@ const Index = () => {
             <Separator className="bg-border/50" />
           </div>
 
-          {/* Instructions */}
-          <div className="gradient-card shadow-soft rounded-xl p-6 border border-accent/30">
-            <h2 className="text-xl font-semibold mb-4 text-foreground">
-              Πώς λειτουργεί;
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center space-y-3">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-primary font-bold text-lg">1</span>
-                </div>
-                <h3 className="font-medium">Γράψε την κριτική σου</h3>
-                <p className="text-sm text-muted-foreground">
-                  Περιέγραψε την εμπειρία σου με φυσικό τρόπο
-                </p>
-              </div>
-              <div className="text-center space-y-3">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-primary font-bold text-lg">2</span>
-                </div>
-                <h3 className="font-medium">Λάβε βελτιωμένο κείμενο</h3>
-                <p className="text-sm text-muted-foreground">
-                  Το κείμενο γίνεται πιο σαφές και ευανάγνωστο
-                </p>
-              </div>
-              <div className="text-center space-y-3">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-primary font-bold text-lg">3</span>
-                </div>
-                <h3 className="font-medium">Δημοσίευσε στο Google Maps</h3>
-                <p className="text-sm text-muted-foreground">
-                  Αντίγραψε και επικόλλησε στην κριτική σου
-                </p>
-              </div>
-            </div>
-          </div>
-          {/* Features Section */}
+          {/* Features Section - Replacing old Instructions */}
           <div className="py-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-4">
