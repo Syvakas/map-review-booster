@@ -1,5 +1,8 @@
 export const runtime = 'edge';
 
+import { businessConfig } from '../src/lib/business-config';
+import { getCategoryPrompt } from '../src/lib/category-prompts';
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Μέθοδος δεν επιτρέπεται' }), {
@@ -34,12 +37,32 @@ export default async function handler(req: Request): Promise<Response> {
     });
   }
 
-  const kwString =
-    Array.isArray(keywords) && keywords.length
-      ? `Χρησιμοποίησε αυτές τις λέξεις-κλειδιά αν ταιριάζουν: ${keywords.join(', ')}.`
-      : '';
+  // Λήψη category prompt για την επιχείρηση
+  const categoryPrompt = getCategoryPrompt(businessConfig.category);
+  
+  // Συνδυασμός keywords από το request και από τη διαμόρφωση
+  const allKeywords = [
+    ...(Array.isArray(keywords) ? keywords : []),
+    ...businessConfig.keywords,
+    ...(categoryPrompt?.keywords || [])
+  ];
+  
+  const uniqueKeywords = [...new Set(allKeywords)];
+  
+  const kwString = uniqueKeywords.length
+    ? `Χρησιμοποίησε αυτές τις λέξεις-κλειδιά αν ταιριάζουν: ${uniqueKeywords.join(', ')}.`
+    : '';
 
-  const userPrompt = `Βελτίωσε το παρακάτω κείμενο κριτικής (ελληνικά, φυσικός τόνος, σαφήνεια, χωρίς υπερβολές). ${kwString}
+  // Δημιουργία εξατομικευμένου prompt
+  const businessContext = `
+ΠΛΗΡΟΦΟΡΙΕΣ ΕΠΙΧΕΙΡΗΣΗΣ:
+- Όνομα: ${businessConfig.name}
+- Κατηγορία: ${businessConfig.category}
+- Τοποθεσία: ${businessConfig.location}
+- Ειδικότητες: ${businessConfig.specialties.join(', ')}
+- Εστίαση: ${categoryPrompt?.focusAreas.join(', ') || 'Γενική βελτίωση'}`;
+
+  const userPrompt = `Βελτίωσε το παρακάτω κείμενο κριτικής (ελληνικά, φυσικός τόνος, σαφήνεια, χωρίς υπερβολές). ${kwString}${businessContext}
 
 Κείμενο:
 ${text}`;
@@ -52,11 +75,11 @@ ${text}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         messages: [
           {
             role: 'system',
-            content:
+            content: categoryPrompt?.systemPrompt || 
               'Είσαι ένας βοηθός που βελτιώνει σύντομα κείμενα κριτικών για Google Maps, κρατώντας το αρχικό νόημα.',
           },
           { role: 'user', content: userPrompt },
