@@ -1,8 +1,5 @@
 export const runtime = 'edge';
 
-import { businessConfig } from '../src/lib/business-config';
-import { getCategoryPrompt } from '../src/lib/category-prompts';
-
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Μέθοδος δεν επιτρέπεται' }), {
@@ -37,35 +34,17 @@ export default async function handler(req: Request): Promise<Response> {
     });
   }
 
-  // Λήψη category prompt για την επιχείρηση
-  const categoryPrompt = getCategoryPrompt(businessConfig.category);
-  
-  // Συνδυασμός keywords από το request και από τη διαμόρφωση
-  const allKeywords = [
-    ...(Array.isArray(keywords) ? keywords : []),
-    ...businessConfig.keywords,
-    ...(categoryPrompt?.keywords || [])
-  ];
-  
-  const uniqueKeywords = [...new Set(allKeywords)];
-  
-  const kwString = uniqueKeywords.length
-    ? `Χρησιμοποίησε αυτές τις λέξεις-κλειδιά αν ταιριάζουν: ${uniqueKeywords.join(', ')}.`
-    : '';
+  const kwString = Array.isArray(keywords) && keywords.length
+    ? `Λέξεις-κλειδιά για ενσωμάτωση (αν ταιριάζουν φυσικά): ${keywords.join(', ')}`
+    : 'Δεν υπάρχουν συγκεκριμένες λέξεις-κλειδιά.';
 
-  // Δημιουργία εξατομικευμένου prompt
-  const businessContext = `
-ΠΛΗΡΟΦΟΡΙΕΣ ΕΠΙΧΕΙΡΗΣΗΣ:
-- Όνομα: ${businessConfig.name}
-- Κατηγορία: ${businessConfig.category}
-- Τοποθεσία: ${businessConfig.location}
-- Ειδικότητες: ${businessConfig.specialties.join(', ')}
-- Εστίαση: ${categoryPrompt?.focusAreas.join(', ') || 'Γενική βελτίωση'}`;
+  const userPrompt = `Βελτίωσε αυτή την κριτική Google Maps:
 
-  const userPrompt = `Βελτίωσε το παρακάτω κείμενο κριτικής (ελληνικά, φυσικός τόνος, σαφήνεια, χωρίς υπερβολές). ${kwString}${businessContext}
+"${text}"
 
-Κείμενο:
-${text}`;
+${kwString}
+
+Απάντηση (μόνο 2-3 προτάσεις):`;
 
   try {
     const resp = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -79,12 +58,12 @@ ${text}`;
         messages: [
           {
             role: 'system',
-            content: categoryPrompt?.systemPrompt || 
-              'Είσαι ένας βοηθός που βελτιώνει σύντομα κείμενα κριτικών για Google Maps, κρατώντας το αρχικό νόημα.',
+            content: 'Είσαι ειδικός στη βελτίωση κριτικών Google Maps στα ελληνικά. Στόχος σου είναι να κάνεις την κριτική πιο χρήσιμη για την επιχείρηση και ταυτόχρονα φυσική σαν να γράφτηκε από πελάτη. Η απάντησή σου πρέπει να είναι ΜΟΝΟ 2-3 προτάσεις (σύντομες, όπως εμφανίζονται στην οθόνη κινητού). Να διατηρείται το ίδιο συναίσθημα με το αρχικό κείμενο. Αν δοθούν λέξεις-κλειδιά, προσπάθησε να τις ενσωματώσεις φυσικά χωρίς να φαίνεται διαφήμιση. Μην εφευρίσκεις ποτέ πληροφορίες που δεν υπάρχουν στο κείμενο ή στις λέξεις-κλειδιά.',
           },
           { role: 'user', content: userPrompt },
         ],
-        temperature: 0.7,
+        temperature: 0.2,
+        max_tokens: 150,
       }),
     });
 
@@ -116,4 +95,5 @@ ${text}`;
     });
   }
 }
+
 export const config = { runtime: 'edge' };
