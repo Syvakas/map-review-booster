@@ -3,9 +3,9 @@ import { ReviewForm } from '@/components/ReviewForm';
 import { ResultCard } from '@/components/ResultCard';
 import { parseQuery, getStoredValue, STORAGE_KEYS } from '@/lib/config';
 import { Separator } from '@/components/ui/separator';
-import { FileText, Shield } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import Footer from '@/components/Footer';
-import { AccessCodeForm } from '@/components/AccessCodeForm';
+// Αφαίρεση: import { AccessCodeForm } from '@/components/AccessCodeForm';
 
 const Index = () => {
   const [improvedText, setImprovedText] = useState<string>('');
@@ -190,6 +190,5 @@ const Index = () => {
 };
 
 export default Index;
-
 
 
