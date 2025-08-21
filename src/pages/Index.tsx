@@ -11,7 +11,6 @@ const Index = () => {
   const [improvedText, setImprovedText] = useState<string>('');
   const [config, setConfig] = useState(() => parseQuery());
   
-
   // Load stored improved text on mount
   useEffect(() => {
     const stored = getStoredValue(STORAGE_KEYS.IMPROVED_TEXT);
@@ -20,18 +19,14 @@ const Index = () => {
     }
   }, []);
 
- 
   const handleImprovedText = (text: string) => {
     setImprovedText(text);
   };
 
   const handleCopyAndOpen = () => {
-        // Optional callback for analytics or additional actions
-
+    // Optional callback for analytics or additional actions
     console.log('User completed copy and open action');
   };
-
-
 
   return (
     <div className="min-h-screen bg-background">
@@ -41,7 +36,7 @@ const Index = () => {
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="p-3 bg-primary/10 rounded-2xl shadow-lg">
-                <FileText className="h-8 w-8 text-primary" />
+                <lucideReact.FileText className="h-8 w-8 text-primary" />
               </div>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -56,9 +51,8 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-    <main className="max-w-5xl mx-auto px-6 sm:px-8 py-8">
+      <main className="max-w-5xl mx-auto px-6 sm:px-8 py-8">
         <div className="space-y-8">
-         
           {/* Review Form */}
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-6">
@@ -83,7 +77,7 @@ const Index = () => {
               ) : (
                 <div className="gradient-card shadow-lg rounded-2xl p-8 text-center border border-border/50 hover:shadow-xl transition-all duration-300">
                   <div className="p-4 bg-muted/30 rounded-2xl mb-4 mx-auto w-fit shadow-sm">
-                    <FileText className="h-12 w-12 text-muted-foreground" />
+                    <lucideReact.FileText className="h-12 w-12 text-muted-foreground" />
                   </div>
                   <h3 className="text-lg font-medium text-muted-foreground mb-2">
                     Αναμονή για βελτίωση
@@ -94,12 +88,11 @@ const Index = () => {
                 </div>
               )}
             </div>
-     
+          </div>
 
           {/* Separator */}
           <div className="py-4">
             <Separator className="bg-border/50" />
-          
           </div>
 
           {/* Features Section - Premium 3-Column Grid */}
@@ -120,14 +113,12 @@ const Index = () => {
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
-       
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Γράψε την κριτική σου
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Περιέγραψε την εμπειρία σου με φυσικό τρόπο, όπως θα την έλεγες σε έναν φίλο
-             
                 </p>
               </div>
 
@@ -137,14 +128,12 @@ const Index = () => {
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
-            
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Λάβε βελτιωμένο κείμενο
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Το κείμενο γίνεται πιο σαφές, ευανάγνωστο και επαγγελματικό αυτόματα
-               
                 </p>
               </div>
 
@@ -155,14 +144,12 @@ const Index = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-              
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Δημοσίευσε στο Google Maps
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   Αντίγραψε και επικόλλησε την βελτιωμένη κριτική στο Google Maps
-            
                 </p>
               </div>
             </div>
@@ -174,7 +161,7 @@ const Index = () => {
       <footer className="border-t border-border/50 bg-muted/30 mt-16">
         <div className="max-w-5xl mx-auto px-6 sm:px-8 py-8">
           <div className="flex items-start gap-3 p-6 bg-amber-50/50 border border-amber-200/50 rounded-2xl shadow-lg">
-            <Shield className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+            <lucideReact.Shield className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
             <div className="text-sm text-amber-800 leading-relaxed">
               <strong>Σημείωση συμμόρφωσης:</strong> Η κριτική πρέπει να αντικατοπτρίζει αληθινή εμπειρία. 
               Μην προσθέτεις στοιχεία που δεν ισχύουν και μην δημοσιεύεις προσωπικά δεδομένα τρίτων.
@@ -184,7 +171,6 @@ const Index = () => {
       </footer>
       
       <Footer />
-     
     </div>
   );
 };
