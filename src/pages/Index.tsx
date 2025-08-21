@@ -3,7 +3,7 @@ import { ReviewForm } from '@/components/ReviewForm';
 import { ResultCard } from '@/components/ResultCard';
 import { parseQuery, getStoredValue, STORAGE_KEYS } from '@/lib/config';
 import { Separator } from '@/components/ui/separator';
-import { FileText } from 'lucide-react';
+import * as lucideReact from 'lucide-react';
 import Footer from '@/components/Footer';
 // Αφαίρεση: import { AccessCodeForm } from '@/components/AccessCodeForm';
 
