@@ -5,6 +5,7 @@ import { parseQuery, getStoredValue, STORAGE_KEYS } from '@/lib/config';
 import { Separator } from '@/components/ui/separator';
 import { FileText, Shield } from 'lucide-react';
 import Footer from '@/components/Footer';
+import { AccessCodeForm } from '@/components/AccessCodeForm';
 
 const Index = () => {
   const [improvedText, setImprovedText] = useState<string>('');
@@ -175,3 +176,20 @@ const Index = () => {
 };
 
 export default Index;
+
+const handleAccessGranted = () => {
+  setHasAccess(true);
+};
+useEffect(() => {
+  const accessGranted = localStorage.getItem('access_granted');
+  if (accessGranted === 'true') {
+    setHasAccess(true);
+  }
+  setIsCheckingAccess(false);
+  if (!hasAccess) {
+    return <AccessCodeForm onAccessGranted={handleAccessGranted} />;
+  }
+  setIsCheckingAccess(false);
+}, []);
+const [hasAccess, setHasAccess] = useState(false);
+const [isCheckingAccess, setIsCheckingAccess] = useState(true);
